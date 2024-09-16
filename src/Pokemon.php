@@ -44,4 +44,21 @@ class Pokemon{
         return $this->descripcion;
     }
 
+    public function buscarPokemon($buscado) {
+        $db = DB::getConexion();
+        // Consulta que busca por nombre, número o tipo
+        $query = "SELECT p.* FROM pokemon p
+              LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
+              LEFT JOIN tipo t ON tp.id_tipo = t.id
+              WHERE p.nombre LIKE :buscado
+              OR p.numero = :buscadoNumero
+              OR t.nombre LIKE :buscado";
+        $stmt = $db->prepare($query);
+        $buscadoNumero = is_numeric($buscado) ? $buscado : null;
+        $stmt->bindValue(':buscado', "%$buscado%");
+        $stmt->bindValue(':buscadoNumero', $buscadoNumero);
+        $stmt->execute();
+        $pokemons = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
+        return $pokemons;
+    }
 }
