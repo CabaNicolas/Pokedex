@@ -1,12 +1,9 @@
-<?php
-require_once __DIR__ . '/src/Pokemon.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
+    <title>Pokedex-Admin</title>
     <link rel="stylesheet" href="Styles/index.css">
     <link rel="icon" href="Imagenes/iconoPestania.webp">
 </head>
@@ -17,21 +14,14 @@ require_once __DIR__ . '/src/Pokemon.php';
     </div>
     <h1>Pokedex</h1>
 
-    <form class="login-form" action="login.php" method="post">
-        <input type="text" name="username" placeholder="Usuario" class="input-login" required>
-        <input type="password" name="password" placeholder="Contraseña" class="input-pass" required>
-        <button type="submit" style="margin-right: 10px;">Ingresar</button>
+    <h3>Usuario ADMIN</h3>
+    <form class="logout" action="index.php" method="post">
+        <button type="submit">Cerrar Sesion</button>
     </form>
-    <?php
-    if (isset($_GET['error']) && $_GET['error'] == 1) {
-        echo "<p style='color:red;'> Datos incorrectos. Intente nuevamente</p>";
-
-    }
-    ?>
 </header>
 <main>
     <div class="buscador">
-        <form action="index.php" method="get">
+        <form action="admin.php" method="get">
             <input type="text" name="buscado" placeholder="Ingrese el nombre, tipo o número del pokemon">
             <button type="submit">¿Quién es este pokemon?</button>
         </form>
@@ -69,6 +59,7 @@ require_once __DIR__ . '/src/Pokemon.php';
                 <th>Tipo</th>
                 <th>Número</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -78,12 +69,17 @@ require_once __DIR__ . '/src/Pokemon.php';
                     <td><?= $pokemon->getTipo() ?></td>
                     <td><?= $pokemon->getNumero() ?></td>
                     <td><?= $pokemon->getNombre() ?></td>
+                    <td><button class="modif">Modificacion</button> <button class="baja">Baja</button></td>
+
                 </tr>
             <?php } ?>
             </tbody>
         </table>
     </div>
-
+    <!-- Agregar nuevo Pokemon -->
+    <form class="nuevo-pokemon" action="" method="post">
+        <button type="submit">Nuevo Pokemon</button>
+    </form>
 </main>
 <?php
 include_once __DIR__ . '/footer.php';

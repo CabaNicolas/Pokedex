@@ -37,8 +37,17 @@ h1 {
     font-size: 2rem;
     margin-left: 35%;
 }
+h3{
+    color: #2E3A59;
+    margin-left: 25%;
+}
 
 .login-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.logout{
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -63,6 +72,19 @@ h1 {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+.logout button{
+    padding: 5px 15px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.logout button:hover{
+    background-color: #C70039;
 }
 
 .login-form button:hover {
@@ -154,6 +176,57 @@ h1 {
 
 .pokemon-table td, .pokemon-table th {
     border: 1px solid #76D7C4;
+}
+
+/*Botones modificar y dar de baja pokemones*/
+.modif{
+    padding: 5px 15px;
+    background-color: #ff6d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.modif:hover {
+    background-color: #C70039;
+}
+
+.baja{
+    padding: 5px 15px;
+    background-color: limegreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.baja:hover{
+    background-color: darkgreen;
+}
+
+.nuevo-pokemon button{
+    padding: 5px 15px;
+    background-color: royalblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+.nuevo-pokemon button:hover{
+    background-color: blue;
+}
+
+.nuevo-pokemon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Footer */
