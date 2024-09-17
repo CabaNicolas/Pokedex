@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-09-2024 a las 18:04:38
+-- Tiempo de generación: 17-09-2024 a las 18:55:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,8 +38,11 @@ CREATE TABLE `evolucion` (
 
 INSERT INTO `evolucion` (`id_poke`, `id_poke2`) VALUES
 (1, 2),
+(2, 1),
 (3, 4),
-(5, 6);
+(4, 3),
+(5, 6),
+(6, 5);
 
 -- --------------------------------------------------------
 
