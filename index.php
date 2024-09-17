@@ -78,6 +78,9 @@ session_start();
                 <th>Tipo</th>
                 <th>Número</th>
                 <th>Nombre</th>
+                <?php if(isset($_SESSION['usuario'])):?>
+                <th>Acciones</th>
+                <?php endif; ?>
             </tr>
             </thead>
             <tbody>
@@ -89,7 +92,10 @@ session_start();
                     <td><?= $pokemon->getNombre() ?></td>
                     <?php if(isset($_SESSION['usuario'])):?>
                     <td><button class="modif">Modificacion</button>
-                        <button class="baja">Baja</button></td>
+                        <form action="delete.php" method="post">
+                            <input type="hidden" name="id" value="<?= $pokemon->getId() ?>">
+                            <button class="baja">Baja</button>
+                        </form> </td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

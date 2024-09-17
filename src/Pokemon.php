@@ -2,6 +2,7 @@
 require_once 'DB.php';
 class Pokemon{
 
+    private $id;
     private $numero;
     private $nombre;
     private $tipo;
@@ -28,6 +29,10 @@ class Pokemon{
         $stmt->execute();
         $pokemons = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
         return $pokemons;
+    }
+
+    public function getId(){
+        return $this->id;
     }
 
     public function getNombre(){
@@ -73,5 +78,26 @@ class Pokemon{
         $stmt->execute();
         $pokemons = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
         return $pokemons;
+    }
+
+    private function eliminarDependencias($id) {
+        $db = DB::getConexion();
+        $query = "DELETE FROM evolucion WHERE id_poke = :id OR id_poke2 = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $query = "DELETE FROM tipo_pokemon WHERE id_pokemon = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+    }
+    public function deletePokemon($id) {
+        $this->eliminarDependencias($id);
+        $db = DB::getConexion();
+        $query = "DELETE FROM pokemon WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
     }
 }
