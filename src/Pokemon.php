@@ -18,6 +18,8 @@ class Pokemon{
             FROM pokemon p
             LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
             LEFT JOIN tipo t ON tp.id_tipo = t.id
+            LEFT JOIN evolucion e ON p.id = e.id_poke OR p.id = e.id_poke2
+            ORDER BY p.numero;
         ";
         $stmt = $db->prepare($query);
         $stmt->execute();
