@@ -28,7 +28,7 @@ session_start();
         <form class="nuevo-pokemon" action="" method="post">
             <button type="submit">Nuevo Pokemon</button>
         </form>
-    <form class="logout" action="index.php" method="post">
+    <form class="logout" action="logout.php" method="post">
         <button type="submit">Cerrar Sesion</button>
     </form>
     <?php endif;
