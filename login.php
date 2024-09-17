@@ -14,7 +14,7 @@ $contrasena = $_POST['password'];
 if ($usuario === $usuario_correcto && $contrasena === $contrasena_correcta) {
     // Si es correcto, guardar el usuario en la sesión
     $_SESSION['usuario'] = $usuario;
-    header("Location: admin.php"); // Redirigir a la página de administración
+    header("Location: index.php"); // Redirigir a la página de administración
     exit();
 } else {
     // Si no es correcto, redirigir a index.php con un mensaje de error

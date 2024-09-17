@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/src/Pokemon.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,13 +17,22 @@ require_once __DIR__ . '/src/Pokemon.php';
         <img src="Imagenes/logo.webp" alt="Imagen Pokeball">
     </div>
     <h1>Pokedex</h1>
-
+    <?php if(!isset($_SESSION['usuario'])):?>
     <form class="login-form" action="login.php" method="post">
         <input type="text" name="username" placeholder="Usuario" class="input-login" required>
         <input type="password" name="password" placeholder="Contraseña" class="input-pass" required>
         <button type="submit" style="margin-right: 10px;">Ingresar</button>
     </form>
-    <?php
+    <?php else:?>
+    <h3>Usuario ADMIN</h3>
+        <form class="nuevo-pokemon" action="" method="post">
+            <button type="submit">Nuevo Pokemon</button>
+        </form>
+    <form class="logout" action="index.php" method="post">
+        <button type="submit">Cerrar Sesion</button>
+    </form>
+    <?php endif;
+
     if (isset($_GET['error']) && $_GET['error'] == 1) {
         echo "<p style='color:red;'> Datos incorrectos. Intente nuevamente</p>";
 
@@ -38,7 +48,6 @@ require_once __DIR__ . '/src/Pokemon.php';
     </div>
 
     <?php
-    require_once __DIR__ . '/src/Pokemon.php';
 
     // Se obtiene el parámetro de búsqueda si existe
     $buscado = isset($_GET['buscado']) ? $_GET['buscado'] : null;
@@ -72,14 +81,18 @@ require_once __DIR__ . '/src/Pokemon.php';
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($pokemons as $pokemon) { ?>
+            <?php foreach ($pokemons as $pokemon): ?>
                 <tr>
                     <td><img src="<?= $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
                     <td><img src="<?= $pokemon->getTipo() ?>" alt="<?= $pokemon->getTipo() ?>"></td>
                     <td><?= $pokemon->getNumero() ?></td>
                     <td><?= $pokemon->getNombre() ?></td>
+                    <?php if(isset($_SESSION['usuario'])):?>
+                    <td><button class="modif">Modificacion</button>
+                        <button class="baja">Baja</button></td>
+                    <?php endif; ?>
                 </tr>
-            <?php } ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
