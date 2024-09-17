@@ -77,7 +77,7 @@ require_once __DIR__ . '/src/Pokemon.php';
                     <td><img src="<?= $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
                     <td><?= $pokemon->getTipo() ?></td>
                     <td><?= $pokemon->getNumero() ?></td>
-                    <td><?= $pokemon->getNombre() ?></td>
+                    <td><a href="detalle.php?id=<?= urldecode($pokemon->getNumero()) ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
                 </tr>
             <?php } ?>
             </tbody>
