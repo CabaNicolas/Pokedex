@@ -14,11 +14,14 @@ class Pokemon{
     public function getPokemons(){
         $db = DB::getConexion();
         $query = "
-            SELECT p.*, t.nombre AS tipo
-            FROM pokemon p
-            LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
-            LEFT JOIN tipo t ON tp.id_tipo = t.id
-            LEFT JOIN evolucion e ON p.id = e.id_poke OR p.id = e.id_poke2
+            SELECT p.*, t.nombre AS tipo, 
+                   ( SELECT e.id_poke2 
+                     FROM evolucion e 
+                     WHERE e.id_poke = p.id AND e.id_poke2 != p.id ) 
+                     AS evoluciones 
+            FROM pokemon p 
+            LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon 
+            LEFT JOIN tipo t ON tp.id_tipo = t.id 
             ORDER BY p.numero;
         ";
         $stmt = $db->prepare($query);
