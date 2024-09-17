@@ -75,7 +75,7 @@ require_once __DIR__ . '/src/Pokemon.php';
             <?php foreach ($pokemons as $pokemon) { ?>
                 <tr>
                     <td><img src="<?= $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
-                    <td><?= $pokemon->getTipo() ?></td>
+                    <td><img src="<?= $pokemon->getTipo() ?>" alt="<?= $pokemon->getTipo() ?>"></td>
                     <td><?= $pokemon->getNumero() ?></td>
                     <td><?= $pokemon->getNombre() ?></td>
                 </tr>
