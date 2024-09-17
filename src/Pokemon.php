@@ -94,10 +94,23 @@ class Pokemon{
     }
     public function deletePokemon($id) {
         $this->eliminarDependencias($id);
+        $this->deleteImagen($id);
         $db = DB::getConexion();
         $query = "DELETE FROM pokemon WHERE id = :id";
         $stmt = $db->prepare($query);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
+    }
+
+    private function deleteImagen($id) {
+        $db = DB::getConexion();
+        $query = "SELECT imagen FROM pokemon WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $imagen = $stmt->fetchColumn();
+        if (file_exists($imagen)) {
+            unlink($imagen);
+        }
     }
 }
