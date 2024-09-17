@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-09-2024 a las 01:04:02
+-- Tiempo de generación: 17-09-2024 a las 05:58:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -52,7 +52,11 @@ CREATE TABLE `pokemon` (
 
 INSERT INTO `pokemon` (`id`, `numero`, `nombre`, `imagen`, `descripcion`) VALUES
                                                                               (1, 1, 'Charmander', 'Imagenes/Charmander.webp', 'Charmander es un pequeño monstruo bípedo parecido a un lagarto. Sus características de fuego son resaltadas por su color de piel anaranjado y su cola, cuya punta está envuelta en llamas. Estas llamas indican su fuerza vital. Si está débil, las llamas arderán más tenue.\r\n'),
-                                                                              (2, 2, 'Charmeleon', 'Imagenes/Charmeleon.webp', 'Charmeleon es un gran lagarto bípedo con escamas de color rojo oscuro y en la parte inferior de color crema, posee como característica general una llama en la punta de su cola al igual que Charmander y Charizard. Es un Pokemon orgulloso que ama las batallas, esgrime su cola para elevar la temperatura y buscando derribar al oponente.\r\n');
+                                                                              (2, 2, 'Charmeleon', 'Imagenes/Charmeleon.webp', 'Charmeleon es un gran lagarto bípedo con escamas de color rojo oscuro y en la parte inferior de color crema, posee como característica general una llama en la punta de su cola al igual que Charmander y Charizard. Es un Pokemon orgulloso que ama las batallas, esgrime su cola para elevar la temperatura y buscando derribar al oponente.\r\n'),
+                                                                              (3, 3, 'Bulbasaur', 'Imagenes/Bulbasaur.webp', '\'Bulbasaur es un Pokémon tipo Planta/Veneno. Es conocido por tener una planta en su espalda que crece con él desde que nace.\''),
+                                                                              (4, 4, 'Ivysaur', 'Imagenes/Ivysaur.webp', '\'Ivysaur es la forma evolucionada de Bulbasaur. La planta en su espalda ha crecido más y ahora tiene un brote de flor.\''),
+                                                                              (5, 5, 'Squirtle', 'Imagenes/Squirtle.webp', '\'Squirtle es un Pokémon tipo Agua. Es una pequeña tortuga azul que utiliza su caparazón para defenderse de ataques y disparar agua con fuerza.\''),
+                                                                              (6, 6, 'Wartortle', 'Imagenes/Wartortle.webp', '\'Wartortle es la evolución de Squirtle. Tiene orejas peludas y su cola se ha vuelto más grande, lo que lo hace nadar con mayor agilidad.\'');
 
 -- --------------------------------------------------------
 
@@ -70,8 +74,9 @@ CREATE TABLE `tipo` (
 --
 
 INSERT INTO `tipo` (`id`, `nombre`) VALUES
-(1, 'Fuego'),
-(2, 'Planta');
+                                        (1, 'Imagenes/fuego.webp'),
+                                        (2, 'Imagenes/hierba.webp'),
+                                        (3, 'Imagenes/agua.webp');
 
 -- --------------------------------------------------------
 
@@ -80,8 +85,8 @@ INSERT INTO `tipo` (`id`, `nombre`) VALUES
 --
 
 CREATE TABLE `tipo_pokemon` (
-`id_pokemon` int(11) NOT NULL,
-`id_tipo` int(11) NOT NULL
+                                `id_pokemon` int(11) NOT NULL,
+                                `id_tipo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -89,8 +94,12 @@ CREATE TABLE `tipo_pokemon` (
 --
 
 INSERT INTO `tipo_pokemon` (`id_pokemon`, `id_tipo`) VALUES
-(1, 1),
-(2, 1);
+                                                         (1, 1),
+                                                         (2, 1),
+                                                         (3, 2),
+                                                         (4, 2),
+                                                         (5, 3),
+                                                         (6, 3);
 
 -- --------------------------------------------------------
 
@@ -148,13 +157,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `pokemon`
 --
 ALTER TABLE `pokemon`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo`
 --
 ALTER TABLE `tipo`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
