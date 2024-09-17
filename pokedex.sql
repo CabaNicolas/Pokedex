@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-09-2024 a las 14:21:39
+-- Tiempo de generación: 17-09-2024 a las 18:04:38
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,6 +31,15 @@ CREATE TABLE `evolucion` (
   `id_poke` int(11) NOT NULL,
   `id_poke2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `evolucion`
+--
+
+INSERT INTO `evolucion` (`id_poke`, `id_poke2`) VALUES
+(1, 2),
+(3, 4),
+(5, 6);
 
 -- --------------------------------------------------------
 
