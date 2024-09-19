@@ -25,9 +25,13 @@ session_start();
     </form>
     <?php else:?>
     <h3>Usuario ADMIN</h3>
-        <form class="nuevo-pokemon" action="" method="post">
-            <button type="submit">Nuevo Pokemon</button>
+
+
+        <form class="nuevo-pokemon" action="create.php" method="get">
+            <button type="submit">Agregar Pokémon</button>
         </form>
+
+
     <form class="logout" action="logout.php" method="post">
         <button type="submit">Cerrar Sesion</button>
     </form>
@@ -91,11 +95,16 @@ session_start();
                     <td><?= $pokemon->getNumero() ?></td>
                     <td><?= $pokemon->getNombre() ?></td>
                     <?php if(isset($_SESSION['usuario'])):?>
-                    <td><button class="modif">Modificacion</button>
+                    <td>
+                        <form class="modificar-pokemon" action="modificate.php" method="get">
+                            <input type="hidden" name="id" value="<?= $pokemon->getId() ?>">
+                        <button type="submit" class="modif">Modificacion</button>
+                        </form>
                         <form action="delete.php" method="post">
                             <input type="hidden" name="id" value="<?= $pokemon->getId() ?>">
                             <button class="baja">Baja</button>
-                        </form> </td>
+                        </form>
+                    </td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
