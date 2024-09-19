@@ -90,7 +90,7 @@ session_start();
                     <td><img src="<?= $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
                     <td><img src="<?= $pokemon->getTipo() ?>" alt="<?= $pokemon->getTipo() ?>"></td>
                     <td><?= $pokemon->getNumero() ?></td>
-                    <td><a href="detalle.php?id=<?= urldecode($pokemon->getNumero()) ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
+                    <td><a href="detalle.php?id=<?= urldecode($pokemon->getId()) ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
                     <?php if(isset($_SESSION['usuario'])):?>
                     <td><button class="modif">Modificacion</button>
                         <form action="delete.php" method="post">

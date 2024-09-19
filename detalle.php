@@ -1,17 +1,9 @@
 <?php
-// Incluir el archivo de conexión (donde está definida la clase DB)
-require_once __DIR__. '/src/db.php';
-
-// Obtener la conexión a la base de datos utilizando la clase DB
-$pdo = DB::getConexion();
-
+require_once __DIR__ . "/src/Pokemon.php";
 $id = $_GET['id'];
-
-// Preparar la consulta para obtener los detalles del Pokémon por su ID
-$stmt = $pdo->prepare("SELECT * FROM pokemon WHERE numero = ?");
-$stmt->execute([$id]);
-$pokemon = $stmt->fetch();
-?>
+$pokemon = (new Pokemon())->buscarPokemonPorId($id);
+$evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
+ ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -37,17 +29,33 @@ $pokemon = $stmt->fetch();
     <section class="pokemon-detail">
         <?php if ($pokemon): ?>
             <div class="pokemon-info">
-                <h2><?php echo $pokemon['nombre']; ?></h2>
+                <h2><?php echo $pokemon->getNombre(); ?></h2>
 
-                <p><?php echo $pokemon['descripcion'];?></p>
+                <p><?php echo $pokemon->getDescripcion();?></p>
 
-                <img src="<?php echo $pokemon['imagen']; ?>" alt="<?php echo $pokemon['imagen']; ?>" />
+                <img src="<?php echo $pokemon->getImagen(); ?>" alt="<?php echo $pokemon->getImagen(); ?>" />
+                <img src="<?php echo $pokemon->getTipo(); ?>" alt= "<?php echo $pokemon->getTipo(); ?>" />
+
+                <?php if (!empty($evoluciones)): ?>
+                    <h3>Evoluciones:</h3>
+                    <ul>
+                        <?php foreach ($evoluciones as $evolucion): ?>
+                            <li><?php echo $evolucion->getNombre(); ?></li>
+                            <img src="<?php echo $evolucion->getImagen(); ?>" alt="Imagen de <?php echo $evolucion->getNombre(); ?>">
+                        <?php endforeach; ?>
+
+                    </ul>
+                <?php else: ?>
+                    <p>Este pokémon no tiene evoluciones.</p>
+                <?php endif; ?>
+
 
                 </div>
             </div>
         <?php else: ?>
             <p class="pokemon-not-found">Pokémon no encontrado.</p>
         <?php endif; ?>
+
     </section>
 </main>
 

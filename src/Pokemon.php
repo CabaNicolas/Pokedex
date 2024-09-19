@@ -1,6 +1,7 @@
 <?php
 require_once 'DB.php';
-class Pokemon{
+class Pokemon
+{
 
     private $id;
     private $numero;
@@ -11,8 +12,8 @@ class Pokemon{
     private $descripcion;
 
 
-
-    public function getPokemons(){
+    public function getPokemons()
+    {
         $db = DB::getConexion();
         $query = "
             SELECT p.*, t.nombre AS tipo, 
@@ -31,38 +32,46 @@ class Pokemon{
         return $pokemons;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getNombre(){
+    public function getNombre()
+    {
         return $this->nombre;
     }
 
-    public function getNumero(){
+    public function getNumero()
+    {
         return $this->numero;
     }
 
-    public function getEvoluciones(){
+    public function getEvoluciones()
+    {
         return $this->evoluciones;
     }
 
-    public function getTipo(){
+    public function getTipo()
+    {
         return $this->tipo;
     }
 
-    public function getImagen(){
+    public function getImagen()
+    {
         return $this->imagen;
     }
 
-    public function getDescripcion(){
+    public function getDescripcion()
+    {
         return $this->descripcion;
     }
 
-    public function buscarPokemon($buscado) {
+    public function buscarPokemon($buscado)
+    {
         $db = DB::getConexion();
         // Consulta que busca por nombre, número o tipo
-        $query =  "
+        $query = "
             SELECT p.*, t.nombre AS tipo
             FROM pokemon p
             LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
@@ -80,7 +89,8 @@ class Pokemon{
         return $pokemons;
     }
 
-    private function eliminarDependencias($id) {
+    private function eliminarDependencias($id)
+    {
         $db = DB::getConexion();
         $query = "DELETE FROM evolucion WHERE id_poke = :id OR id_poke2 = :id";
         $stmt = $db->prepare($query);
@@ -92,7 +102,9 @@ class Pokemon{
         $stmt->bindValue(':id', $id);
         $stmt->execute();
     }
-    public function deletePokemon($id) {
+
+    public function deletePokemon($id)
+    {
         $this->eliminarDependencias($id);
         $this->deleteImagen($id);
         $db = DB::getConexion();
@@ -102,7 +114,8 @@ class Pokemon{
         $stmt->execute();
     }
 
-    private function deleteImagen($id) {
+    private function deleteImagen($id)
+    {
         $db = DB::getConexion();
         $query = "SELECT imagen FROM pokemon WHERE id = :id";
         $stmt = $db->prepare($query);
@@ -112,5 +125,32 @@ class Pokemon{
         if (file_exists($imagen)) {
             unlink($imagen);
         }
+    }
+
+    public function buscarPokemonPorId($id)
+    {
+        $pdo = DB::getConexion();
+        $stmt = $pdo->prepare("SELECT p.*, t.nombre AS tipo
+        FROM pokemon p
+        LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
+        LEFT JOIN tipo t ON tp.id_tipo = t.id
+        WHERE p.id = :id");
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $pokemon = $stmt->fetchObject('Pokemon');
+        return $pokemon;
+    }
+
+    public function buscarEvoluciones ($numero){
+        $pdo = DB::getConexion();
+        $stmt = $pdo->prepare("SELECT p2.id, p2.nombre, p2.imagen, p2.descripcion
+FROM evolucion e
+JOIN pokemon p1 ON e.id_poke = p1.id
+JOIN pokemon p2 ON e.id_poke2 = p2.id
+WHERE p1.numero = ?");
+        $stmt->execute([$numero]);
+        $evoluciones = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
+        return $evoluciones;
+
     }
 }
