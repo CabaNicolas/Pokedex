@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="Styles/accionStyle.css">
 </head>
 
+<body>
 <header>
     <div class="logo">
         <a href="index.php"><img src="Imagenes/logo.webp" alt="Imagen Pokeball"></a>

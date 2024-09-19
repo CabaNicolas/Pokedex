@@ -14,15 +14,14 @@ if (isset($_GET['id'])) {
         exit();
     }
 
-    // Asegúrate de que los tipos sean un array
     $tipos = $pokemon->getTipo();
 
-    // Si no es un array, conviértelo
+
     if (!is_array($tipos)) {
-        $tipos = explode(',', $tipos); // Convierte en array si es cadena
+        $tipos = explode(',', $tipos);
     }
 
-    // Si el resultado sigue siendo null, usa un array vacío
+
     if (!$tipos) {
         $tipos = [];
     }
@@ -41,6 +40,7 @@ if (isset($_GET['id'])) {
     <title>Modificar un Pokémon</title>
     <link rel="stylesheet" href="Styles/accionStyle.css">
 </head>
+<body>
 
 <header>
     <div class="logo">
