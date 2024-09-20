@@ -31,7 +31,7 @@ class Pokemon{
         return $pokemons;
     }
 
-    public function getPokemonById($id) {
+    public function getPokemonById($id){
         $db = DB::getConexion();
 
         $query = "
@@ -155,7 +155,7 @@ class Pokemon{
         return $pokemon;
     }
 
-    public function createPokemon($nombre, $numero, $tipos, $imagen, $descripcion) {
+    public function createPokemon($nombre, $numero, $tipos, $imagen, $descripcion){
         $db = DB::getConexion();
 
         // validar si el numero ya existe
@@ -254,8 +254,27 @@ class Pokemon{
         return true;
     }
 
+    public function insertTipoPokemon($pokemon_id, $tipo_nombre){
+        $db = DB::getConexion();
 
-}
+        $sql_tipo = "SELECT id FROM tipo WHERE nombre = :tipo";
+        $stmt = $db->prepare($sql_tipo);
+        $stmt->bindValue(':tipo', $tipo_nombre, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            throw new Exception('Tipo no válido: ' . $tipo_nombre);
+        }
+
+        $tipo_id = $row['id'];
+
+        $sql_insert = "INSERT INTO tipo_pokemon (id_pokemon, id_tipo) VALUES (:id_pokemon, :id_tipo)";
+        $stmt = $db->prepare($sql_insert);
+        $stmt->bindValue(':id_pokemon', $pokemon_id, PDO::PARAM_INT);
+        $stmt->bindValue(':id_tipo', $tipo_id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 
     public function buscarEvoluciones ($numero){
         $pdo = DB::getConexion();

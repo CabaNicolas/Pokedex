@@ -20,7 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (move_uploaded_file($tempPath, $uploadFile)) {
         $pokemon = new Pokemon();
-        $pokemon->createPokemon($nombre, $numero, $tipos, $uploadFile, $descripcion);
+        $pokemon_id = $pokemon->createPokemon($nombre, $numero, $tipos, $uploadFile, $descripcion);
+
+        foreach ($tipos as $tipo) {
+            $pokemon->insertTipoPokemon($pokemon_id, $tipo);
+        }
 
         header("Location: index.php");
         exit();
