@@ -19,10 +19,11 @@ session_start();
     <h1>Pokedex</h1>
     <?php if(!isset($_SESSION['usuario'])):?>
     <form class="login-form" action="login.php" method="post">
-        <input type="text" name="username" placeholder="Usuario" class="input-login" required>
+        <input type="text" name="username" placeholder="Usuario (email)" class="input-login" required>
         <input type="password" name="password" placeholder="Contraseña" class="input-pass" required>
         <button type="submit" style="margin-right: 10px;">Ingresar</button>
     </form>
+        <a href="registro.php">Crear cuenta</a>
     <?php else:?>
     <h3>Usuario ADMIN</h3>
 
@@ -38,7 +39,10 @@ session_start();
     <?php endif;
 
     if (isset($_GET['error']) && $_GET['error'] == 1) {
-        echo "<p style='color:red;'> Datos incorrectos. Intente nuevamente</p>";
+        echo "<p style='color:red;'> Usuario inexistente</p>";
+
+    }else if (isset($_GET['error']) && $_GET['error'] == 2) {
+        echo "<p style='color:red;'> Contraseña incorrecta</p>";
 
     }
     ?>

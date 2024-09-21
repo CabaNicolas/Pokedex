@@ -61,7 +61,7 @@ h3{
     font-size: 1rem;
 }
 .input-login, .input-pass{
-    width: 20%;
+    width: 25%;
 }
 .login-form button {
     padding: 5px 15px;
@@ -213,7 +213,7 @@ h3{
     color: white;
     border: none;
     border-radius: 5px;
-    width: 250px;
+    margin-right: 10px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
