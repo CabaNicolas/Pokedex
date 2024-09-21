@@ -23,7 +23,7 @@ if($email!="" && $password!=""){
         $insertar = $db->prepare("INSERT INTO usuario (email, password) VALUES (?, ?)");
         if ($insertar->execute([$email, $password])) {
             //Si la inserción es exitosa, mostrar un mensaje de éxito
-            header("Location: registro.php?status=success&message=Registro exitoso. Vuelva al inicio e inicie sesion");
+            header("Location: index.php");
             exit();
         } else{
             //Si algo falla en la inserción

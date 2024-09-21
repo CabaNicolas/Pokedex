@@ -19,7 +19,7 @@ session_start();
     <h1>Pokedex</h1>
     <?php if(!isset($_SESSION['usuario'])):?>
     <form class="login-form" action="login.php" method="post">
-        <input type="text" name="username" placeholder="Usuario (email)" class="input-login" required>
+        <input type="text" name="username" placeholder="Email" class="input-login" required>
         <input type="password" name="password" placeholder="Contraseña" class="input-pass" required>
         <button type="submit" style="margin-right: 10px;">Ingresar</button>
     </form>
