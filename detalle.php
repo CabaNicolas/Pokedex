@@ -2,11 +2,10 @@
 require_once __DIR__ . "/src/Pokemon.php";
 $id = $_GET['id'];
 $pokemon = (new Pokemon())->buscarPokemonPorId($id);
-if($pokemon != null){
+if ($pokemon != null) {
     $evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
 }
-
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -15,61 +14,67 @@ if($pokemon != null){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Pokémon</title>
     <link rel="stylesheet" href="Styles/index.css">
+
 </head>
 <body>
-<header>
-        <div class="logo">
-            <img src="Imagenes/logo.webp" alt="Imagen Pokeball">
-        </div>
-        <h1>Pokedex</h1>
+<header class="header">
+    <div class="logo">
+        <img src="Imagenes/logo.webp" alt="Imagen Pokeball">
+    </div>
+    <h1 class="title">Pokedex</h1>
 </header>
 
-<main>
-
-    <h1>Detalle de Pokémon</h1>
-    <a href="index.php">Volver a la Pokédex</a>
+<main class="main-container">
+    <h1 class="text-center mb-4">Detalle de Pokémon</h1>
+    <div class="text-center mb-4">
+        <a href="index.php" class="btn-back">Volver a la Pokédex</a>
+    </div>
 
     <section class="pokemon-detail">
         <?php if ($pokemon): ?>
             <div class="pokemon-info">
-                <h2><?php echo $pokemon->getNombre(); ?></h2>
+                <h2><?php echo htmlspecialchars($pokemon->getNombre(), ENT_QUOTES, 'UTF-8'); ?></h2>
+                <p class="description"><?php echo htmlspecialchars($pokemon->getDescripcion(), ENT_QUOTES, 'UTF-8'); ?></p>
+                <img src="<?php echo htmlspecialchars($pokemon->getImagen(), ENT_QUOTES, 'UTF-8'); ?>" alt="Imagen de <?php echo htmlspecialchars($pokemon->getNombre(), ENT_QUOTES, 'UTF-8'); ?>" class="main-image" />
 
-                <p><?php echo $pokemon->getDescripcion();?></p>
+                <div class="tipos">
+                    <?php
+                    $tipos = explode(',', $pokemon->getTipo());
+                    foreach ($tipos as $tipo):
+                        ?>
+                        <div class="tipos-badge">
+                            <img src="<?php echo htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8'); ?>" alt="Tipo de <?php echo htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8'); ?>">
 
-                <img src="<?php echo $pokemon->getImagen(); ?>" alt="<?php echo $pokemon->getImagen(); ?>" />
-                <?php $tipos = explode(',', $pokemon->getTipo());
-                foreach ($tipos as $tipo):
-                ?>
-                <img src="<?php echo $tipo; ?>" alt= "<?php echo $tipo; ?>" />
-                <?php endforeach;
-
-                if (!empty($evoluciones)): ?>
-                    <h3>Evoluciones:</h3>
-                    <ul>
-                        <?php foreach ($evoluciones as $evolucion): ?>
-                            <li><?php echo $evolucion->getNombre(); ?></li>
-                            <img src="<?php echo $evolucion->getImagen(); ?>" alt="Imagen de <?php echo $evolucion->getNombre(); ?>">
-                        <?php endforeach; ?>
-
-                    </ul>
-                <?php else: ?>
-                    <p>Este pokémon no tiene evoluciones.</p>
-                <?php endif; ?>
-
-
+                        </div>
+                    <?php endforeach; ?>
                 </div>
+
+                <?php if (!empty($evoluciones)): ?>
+                    <div class="evoluciones">
+
+                        <h3 class="evoluciones-titulo">Evoluciones</h3>
+
+                        <div class="evolution-list">
+                            <?php foreach ($evoluciones as $evolucion): ?>
+                                <div class="evolution-item">
+                                    <img src="<?php echo htmlspecialchars($evolucion->getImagen(), ENT_QUOTES, 'UTF-8'); ?>" alt="Imagen de <?php echo htmlspecialchars($evolucion->getNombre(), ENT_QUOTES, 'UTF-8'); ?>" class="evolution-image" />
+                                    <p><?php echo htmlspecialchars($evolucion->getNombre(), ENT_QUOTES, 'UTF-8'); ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <p class="text-danger">Este pokémon no tiene evoluciones.</p>
+                <?php endif; ?>
             </div>
         <?php else: ?>
             <p class="pokemon-not-found">Pokémon no encontrado.</p>
         <?php endif; ?>
-
     </section>
 </main>
 
 <footer>
-   <?php include_once __DIR__ . '/footer.php'; ?>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </footer>
-
 </body>
 </html>
-
