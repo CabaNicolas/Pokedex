@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-09-2024 a las 18:55:48
+-- Tiempo de generación: 22-09-2024 a las 07:40:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -68,7 +68,10 @@ INSERT INTO `pokemon` (`id`, `numero`, `nombre`, `imagen`, `descripcion`) VALUES
 (3, 1, 'Bulbasaur', 'Imagenes/Bulbasaur.webp', '\'Bulbasaur es un Pokémon tipo Planta/Veneno. Es conocido por tener una planta en su espalda que crece con él desde que nace.\''),
 (4, 2, 'Ivysaur', 'Imagenes/Ivysaur.webp', '\'Ivysaur es la forma evolucionada de Bulbasaur. La planta en su espalda ha crecido más y ahora tiene un brote de flor.\''),
 (5, 7, 'Squirtle', 'Imagenes/Squirtle.webp', '\'Squirtle es un Pokémon tipo Agua. Es una pequeña tortuga azul que utiliza su caparazón para defenderse de ataques y disparar agua con fuerza.\''),
-(6, 8, 'Wartortle', 'Imagenes/Wartortle.webp', '\'Wartortle es la evolución de Squirtle. Tiene orejas peludas y su cola se ha vuelto más grande, lo que lo hace nadar con mayor agilidad.\'');
+(6, 8, 'Wartortle', 'Imagenes/Wartortle.webp', '\'Wartortle es la evolución de Squirtle. Tiene orejas peludas y su cola se ha vuelto más grande, lo que lo hace nadar con mayor agilidad.\''),
+(7, 3, 'Venasaur', 'Imagenes/Venusaur.webp', 'El capullo de su lomo se abre completamente, dejando ver una enorme flor rosada y unas hojas semejantes a las de palmera o las de la Rafflesia arnoldii, que se nutre de la luz solar por fotosíntesis, aunque también absorbe energía del propio Pokémon.'),
+(8, 6, 'Charizard', 'Imagenes/Charizard.webp', 'Su nombre es una contracción de las palabras en inglés char (carbonizar, quemar, incinerar) y lizard (lagarto). Su nombre en japonés, Lizardon, es una combinación de lizard (lagarto en inglés) y don, un sufijo que se utiliza comúnmente en dinosaurios y significa diente.'),
+(9, 9, 'Blastoise', 'Imagenes/Venusaur.webp', 'Su nombre es una combinación de las palabras en inglés blast (explosión o ráfaga) y tortoise (tortuga terrestre). Su nombre japonés, Kamex, proviene de 亀 kame (tortuga) y posiblemente de マックス makkusu o max (máximo). Su nombre francés, Tortank, proviene de las palabras tortue (tortuga) y tank (tanque).');
 
 -- --------------------------------------------------------
 
@@ -87,7 +90,7 @@ CREATE TABLE `tipo` (
 
 INSERT INTO `tipo` (`id`, `nombre`) VALUES
 (1, 'Imagenes/fuego.webp'),
-(2, 'Imagenes/hierba.webp'),
+(2, 'Imagenes/planta.webp'),
 (3, 'Imagenes/agua.webp');
 
 -- --------------------------------------------------------
@@ -111,7 +114,10 @@ INSERT INTO `tipo_pokemon` (`id_pokemon`, `id_tipo`) VALUES
 (3, 2),
 (4, 2),
 (5, 3),
-(6, 3);
+(6, 3),
+(7, 2),
+(8, 1),
+(9, 3);
 
 -- --------------------------------------------------------
 
@@ -124,6 +130,13 @@ CREATE TABLE `usuario` (
   `email` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `email`, `password`) VALUES
+(2, 'nicolas@caba.com', '1234-');
 
 --
 -- Índices para tablas volcadas
@@ -170,7 +183,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `pokemon`
 --
 ALTER TABLE `pokemon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo`
@@ -182,7 +195,7 @@ ALTER TABLE `tipo`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
