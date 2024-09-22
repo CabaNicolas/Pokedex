@@ -6,7 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre'];
     $numero = $_POST['numero'];
     $tipos = $_POST['tipos'];
+    //$evoluciones = $_POST['evoluciones'];
     $descripcion = $_POST['descripcion'];
+    $pokemon = new Pokemon();
 
     if(count($tipos)  > 2) {
         echo "Solo se permiten hasta 2 tipos";
@@ -17,18 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tempPath = $_FILES['imagen']['tmp_name'];
     $uploadDir = 'Imagenes/';
     $uploadFile = $uploadDir . basename($imagen);
+    $respuesta = move_uploaded_file($tempPath, $uploadFile);
+    $uploadFile = $respuesta ? $uploadFile : null;
 
-    if (move_uploaded_file($tempPath, $uploadFile)) {
-        $pokemon = new Pokemon();
-        $pokemon_id = $pokemon->createPokemon($nombre, $numero, $tipos, $uploadFile, $descripcion);
+    $validTypes = $pokemon->verificarSiExisteTipos($tipos);
 
-        foreach ($tipos as $tipo) {
-            $pokemon->insertTipoPokemon($pokemon_id, $tipo);
-        }
+    if ($validTypes) {
+        $pokemonId = $pokemon->insertarPokemon($nombre, $numero, $uploadFile, $descripcion);
+        $pokemon->insertarTipoPokemon($pokemonId, $validTypes);
 
         header("Location: index.php");
         exit();
-    } else {
-        echo "No se pudo subir la imagen";
+    }else{
+        echo "Uno de los tipos no existe";
     }
 }

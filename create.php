@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/src/Pokemon.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +30,18 @@
         <option value="Imagenes/fuego.webp">Fuego</option>
         <option value="Imagenes/agua.webp">Agua</option>
         <option value="Imagenes/planta.webp">Planta</option>
+    </select>
+
+    <label for="evoluciones">Evoluciones:</label>
+    <select name="evoluciones[]" id="evoluciones" multiple>
+        <?php
+        $pokemons = (new Pokemon())->getPokemons();
+        foreach ($pokemons as $pokemon):
+        ?>
+            <option value="<?= $pokemon->getId() ?>"><?= $pokemon->getNombre() ?></option>
+        <?php
+        endforeach;
+        ?>
     </select>
 
     <textarea name="descripcion" placeholder="Descripcion" rows="4" required></textarea>

@@ -169,21 +169,8 @@ class Pokemon{
         return $pokemon;
     }
 
-    public function createPokemon($nombre, $numero, $tipos, $imagen, $descripcion){
+    public function insertarPokemon($nombre, $numero, $imagen, $descripcion){
         $db = DB::getConexion();
-
-        // validar si el numero ya existe
-        $query = "SELECT COUNT(*) FROM pokemon WHERE numero = :numero";
-        $stmt = $db->prepare($query);
-        $stmt->bindValue(':numero', $numero);
-        $stmt->execute();
-        $count = $stmt->fetchColumn();
-
-        if ($count > 0) {
-            echo "Error: Ya existe un Pokémon con el número $numero.";
-            return;
-        }
-
         $query = "INSERT INTO pokemon (nombre, numero, imagen, descripcion) 
               VALUES (:nombre, :numero, :imagen, :descripcion)";
         $stmt = $db->prepare($query);
@@ -192,30 +179,18 @@ class Pokemon{
         $stmt->bindValue(':imagen', $imagen);
         $stmt->bindValue(':descripcion', $descripcion);
         $stmt->execute();
+        return $db->lastInsertId();
+    }
 
-        $pokemonId = $db->lastInsertId();
-
-        // verificar que los tipos existen en la tabla tipo
-        $query = "SELECT id FROM tipo WHERE id IN (" . implode(',', array_fill(0, count($tipos), '?')) . ")";
+    public function verificarSiExisteTipos($tipos) {
+        $db = DB::getConexion();
+        $query = "SELECT id FROM tipo WHERE nombre IN (" . implode(',', array_fill(0, count($tipos), '?')) . ")";
         $stmt = $db->prepare($query);
         $stmt->execute($tipos);
         $validTypes = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
-        // insertar los tipos asociados en la tabla tipo_pokemon
-        foreach ($tipos as $tipo) {
-            if (in_array($tipo, $validTypes)) { //verifica si el tipo es valido
-                $query = "INSERT INTO tipo_pokemon (id_pokemon, id_tipo) 
-                      VALUES (:id_pokemon, :id_tipo)";
-                $stmt = $db->prepare($query);
-                $stmt->bindValue(':id_pokemon', $pokemonId);
-                $stmt->bindValue(':id_tipo', $tipo);
-                $stmt->execute();
-            } else {
-                echo "Tipo no válido: $tipo";
-            }
-        }
-
-        return $pokemonId;
+        echo var_dump($validTypes);
+        echo var_dump($tipos);
+        return $validTypes;
     }
 
     public function modificatePokemon($id, $nombre = null, $numero = null, $tipos = [], $descripcion = null,  $imagen = null) {
@@ -268,26 +243,15 @@ class Pokemon{
         return true;
     }
 
-    public function insertTipoPokemon($pokemon_id, $tipo_nombre){
+    public function insertarTipoPokemon($pokemonId, $validTypes) {
         $db = DB::getConexion();
-
-        $sql_tipo = "SELECT id FROM tipo WHERE nombre = :tipo";
-        $stmt = $db->prepare($sql_tipo);
-        $stmt->bindValue(':tipo', $tipo_nombre, PDO::PARAM_STR);
-        $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$row) {
-            throw new Exception('Tipo no válido: ' . $tipo_nombre);
+        foreach ($validTypes as $tipo) {
+            $query = "INSERT INTO tipo_pokemon (id_pokemon, id_tipo) VALUES (:id_pokemon, :id_tipo)";
+            $stmt = $db->prepare($query);
+            $stmt->bindValue(':id_pokemon', $pokemonId);
+            $stmt->bindValue(':id_tipo', $tipo);
+            $stmt->execute();
         }
-
-        $tipo_id = $row['id'];
-
-        $sql_insert = "INSERT INTO tipo_pokemon (id_pokemon, id_tipo) VALUES (:id_pokemon, :id_tipo)";
-        $stmt = $db->prepare($sql_insert);
-        $stmt->bindValue(':id_pokemon', $pokemon_id, PDO::PARAM_INT);
-        $stmt->bindValue(':id_tipo', $tipo_id, PDO::PARAM_INT);
-        $stmt->execute();
     }
 
     public function buscarEvoluciones ($numero){
