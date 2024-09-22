@@ -26,7 +26,7 @@
     <select name="tipos[]" id="tipo" multiple required>
         <option value="Imagenes/fuego.webp">Fuego</option>
         <option value="Imagenes/agua.webp">Agua</option>
-        <option value="Imagenes/hierba.webp">hierba</option>
+        <option value="Imagenes/planta.webp">Planta</option>
     </select>
 
     <textarea name="descripcion" placeholder="Descripcion" rows="4" required></textarea>
