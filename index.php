@@ -93,12 +93,20 @@ session_start();
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($pokemons as $pokemon): ?>
+            <?php foreach ($pokemons as $pokemon):
+                ?>
                 <tr>
                     <td><img src="<?= $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
-                    <td><img src="<?= $pokemon->getTipo() ?>" alt="<?= $pokemon->getTipo() ?>"></td>
+                    <td>
+                    <?php
+                    $tipos = explode(',', $pokemon->getTipo());
+                    foreach($tipos as $tipo):
+                    ?>
+                    <img src="<?= $tipo ?>" alt="<?= $tipo ?>">
+                    <?php endforeach; ?>
+                    </td>
                     <td><?= $pokemon->getNumero() ?></td>
-                    <td><a href="detalle.php?id=<?= urldecode($pokemon->getId()) ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
+                    <td><a href="detalle.php?id=<?= $pokemon->getId() ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
                     <?php if(isset($_SESSION['usuario'])):?>
                     <td>
                         <form class="modificar-pokemon" action="modificate.php" method="get">

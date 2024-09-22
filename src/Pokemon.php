@@ -15,14 +15,17 @@ class Pokemon{
     public function getPokemons(){
         $db = DB::getConexion();
         $query = "
-            SELECT p.*, t.nombre AS tipo, 
+            SELECT p.*, 
+                   ( SELECT GROUP_CONCAT(t.nombre) 
+                     FROM tipo_pokemon tp 
+                     INNER JOIN tipo t ON tp.id_tipo = t.id 
+                     WHERE tp.id_pokemon = p.id 
+                     GROUP BY tp.id_pokemon ) AS tipo,
                    ( SELECT e.id_poke2 
                      FROM evolucion e 
                      WHERE e.id_poke = p.id AND e.id_poke2 != p.id ) 
                      AS evoluciones 
             FROM pokemon p 
-            LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon 
-            LEFT JOIN tipo t ON tp.id_tipo = t.id 
             ORDER BY p.numero;
         ";
         $stmt = $db->prepare($query);
@@ -90,13 +93,19 @@ class Pokemon{
         $db = DB::getConexion();
         // Consulta que busca por nombre, número o tipo
         $query =  "
-            SELECT p.*, t.nombre AS tipo
+            SELECT p.*, 
+                   ( SELECT GROUP_CONCAT(t.nombre) 
+                     FROM tipo_pokemon tp 
+                     INNER JOIN tipo t ON tp.id_tipo = t.id 
+                     WHERE tp.id_pokemon = p.id 
+                     GROUP BY tp.id_pokemon ) AS tipo
             FROM pokemon p
             LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
             LEFT JOIN tipo t ON tp.id_tipo = t.id
             WHERE p.nombre LIKE :buscado
               OR p.numero = :buscadoNumero
               OR t.nombre LIKE :buscado
+            GROUP BY p.id
         ";
         $stmt = $db->prepare($query);
         $buscadoNumero = is_numeric($buscado) ? $buscado : null;
@@ -144,11 +153,16 @@ class Pokemon{
     public function buscarPokemonPorId($id)
     {
         $pdo = DB::getConexion();
-        $stmt = $pdo->prepare("SELECT p.*, t.nombre AS tipo
-        FROM pokemon p
-        LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
-        LEFT JOIN tipo t ON tp.id_tipo = t.id
-        WHERE p.id = :id");
+        $stmt = $pdo->prepare("SELECT p.*, (
+                SELECT GROUP_CONCAT(t.nombre)
+                FROM tipo_pokemon tp
+                INNER JOIN tipo t ON tp.id_tipo = t.id
+                WHERE tp.id_pokemon = p.id
+                GROUP BY tp.id_pokemon) AS tipo
+            FROM pokemon p
+            LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon
+            LEFT JOIN tipo t ON tp.id_tipo = t.id
+            WHERE p.id = :id");
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $pokemon = $stmt->fetchObject('Pokemon');
@@ -279,10 +293,10 @@ class Pokemon{
     public function buscarEvoluciones ($numero){
         $pdo = DB::getConexion();
         $stmt = $pdo->prepare("SELECT p2.id, p2.nombre, p2.imagen, p2.descripcion
-FROM evolucion e
-JOIN pokemon p1 ON e.id_poke = p1.id
-JOIN pokemon p2 ON e.id_poke2 = p2.id
-WHERE p1.numero = ?");
+            FROM evolucion e
+            JOIN pokemon p1 ON e.id_poke = p1.id
+            JOIN pokemon p2 ON e.id_poke2 = p2.id
+            WHERE p1.numero = ?");
         $stmt->execute([$numero]);
         $evoluciones = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
         return $evoluciones;

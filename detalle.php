@@ -2,7 +2,10 @@
 require_once __DIR__ . "/src/Pokemon.php";
 $id = $_GET['id'];
 $pokemon = (new Pokemon())->buscarPokemonPorId($id);
-$evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
+if($pokemon != null){
+    $evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
+}
+
  ?>
 
 <!DOCTYPE html>
@@ -34,9 +37,13 @@ $evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
                 <p><?php echo $pokemon->getDescripcion();?></p>
 
                 <img src="<?php echo $pokemon->getImagen(); ?>" alt="<?php echo $pokemon->getImagen(); ?>" />
-                <img src="<?php echo $pokemon->getTipo(); ?>" alt= "<?php echo $pokemon->getTipo(); ?>" />
+                <?php $tipos = explode(',', $pokemon->getTipo());
+                foreach ($tipos as $tipo):
+                ?>
+                <img src="<?php echo $tipo; ?>" alt= "<?php echo $tipo; ?>" />
+                <?php endforeach;
 
-                <?php if (!empty($evoluciones)): ?>
+                if (!empty($evoluciones)): ?>
                     <h3>Evoluciones:</h3>
                     <ul>
                         <?php foreach ($evoluciones as $evolucion): ?>
