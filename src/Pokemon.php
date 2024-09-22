@@ -21,10 +21,10 @@ class Pokemon{
                      INNER JOIN tipo t ON tp.id_tipo = t.id 
                      WHERE tp.id_pokemon = p.id 
                      GROUP BY tp.id_pokemon ) AS tipo,
-                   ( SELECT e.id_poke2 
+                   ( SELECT GROUP_CONCAT(e.id_poke2) 
                      FROM evolucion e 
-                     WHERE e.id_poke = p.id AND e.id_poke2 != p.id ) 
-                     AS evoluciones 
+                     WHERE e.id_poke = p.id AND e.id_poke2 != p.id 
+                     GROUP BY e.id_poke ) AS evoluciones 
             FROM pokemon p 
             ORDER BY p.numero;
         ";
@@ -193,6 +193,15 @@ class Pokemon{
         return $validTypes;
     }
 
+    public function verificarSiExistePokemons($evoluciones) {
+        $db = DB::getConexion();
+        $query = "SELECT id FROM pokemon WHERE id IN (" . implode(',', array_fill(0, count($evoluciones), '?')) . ")";
+        $stmt = $db->prepare($query);
+        $stmt->execute($evoluciones);
+        $validEvolutions = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $validEvolutions;
+    }
+
     public function modificatePokemon($id, $nombre = null, $numero = null, $tipos = [], $descripcion = null,  $imagen = null) {
         $db = DB::getConexion();
         $updates = [];
@@ -250,6 +259,17 @@ class Pokemon{
             $stmt = $db->prepare($query);
             $stmt->bindValue(':id_pokemon', $pokemonId);
             $stmt->bindValue(':id_tipo', $tipo);
+            $stmt->execute();
+        }
+    }
+
+    public function insertarEvolucionPokemon($pokemonId, $validEvolutions) {
+        $db = DB::getConexion();
+        foreach ($validEvolutions as $evolution) {
+            $query = "INSERT INTO evolucion (id_poke, id_poke2) VALUES (:id_poke, :id_poke2)";
+            $stmt = $db->prepare($query);
+            $stmt->bindValue(':id_poke', $pokemonId);
+            $stmt->bindValue(':id_poke2', $evolution);
             $stmt->execute();
         }
     }
