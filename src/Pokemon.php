@@ -34,32 +34,6 @@ class Pokemon{
         return $pokemons;
     }
 
-    public function getPokemonById($id){
-        $db = DB::getConexion();
-
-        $query = "
-        SELECT p.*, t.nombre AS tipo, 
-               ( SELECT e.id_poke2 
-                 FROM evolucion e 
-                 WHERE e.id_poke = p.id AND e.id_poke2 != p.id ) 
-                 AS evoluciones 
-        FROM pokemon p 
-        LEFT JOIN tipo_pokemon tp ON p.id = tp.id_pokemon 
-        LEFT JOIN tipo t ON tp.id_tipo = t.id 
-        WHERE p.id = :id
-        LIMIT 1;
-    ";
-
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $pokemon = $stmt->fetchObject('Pokemon');
-
-        return $pokemon ? $pokemon : null;
-    }
-
-
     public function getId()
     {
         return $this->id;
@@ -169,6 +143,15 @@ class Pokemon{
         return $pokemon;
     }
 
+    public function tipos(){
+        $db = DB::getConexion();
+        $query = "SELECT * FROM tipo";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $tipos = $stmt->fetchAll();
+        return $tipos;
+    }
+
     public function insertarPokemon($nombre, $numero, $imagen, $descripcion){
         $db = DB::getConexion();
         $query = "INSERT INTO pokemon (nombre, numero, imagen, descripcion) 
@@ -194,6 +177,7 @@ class Pokemon{
     }
 
     public function verificarSiExistePokemons($evoluciones) {
+        if(empty($evoluciones)) return [];
         $db = DB::getConexion();
         $query = "SELECT id FROM pokemon WHERE id IN (" . implode(',', array_fill(0, count($evoluciones), '?')) . ")";
         $stmt = $db->prepare($query);
@@ -202,29 +186,36 @@ class Pokemon{
         return $validEvolutions;
     }
 
-    public function modificatePokemon($id, $nombre = null, $numero = null, $tipos = [], $descripcion = null,  $imagen = null) {
+    public function modificatePokemon($id, $nombre = null, $numero = null, $tipos = [], $evoluciones = [], $descripcion = null,  $imagen = null) {
         $db = DB::getConexion();
-        $updates = [];
-        $params = [':id' => $id];
 
-        if (!is_null($nombre)) {
-            $updates[] = "nombre = :nombre";
+        $imagenVieja = $this->buscarPokemonPorId($id)->getImagen();
+        if (file_exists($imagenVieja) && $imagenVieja != $imagen && !empty($imagenVieja) && !empty($imagen)) {
+            unlink($imagenVieja);
+        }
+
+        $updates = [];
+        $params = [
+            ':id' => $id
+        ];
+
+        if (!empty($nombre)) {
+            $updates[] = 'nombre = :nombre';
             $params[':nombre'] = $nombre;
         }
 
-        if (!is_null($numero)) {
-            $updates[] = "numero = :numero";
+        if (!empty($numero)) {
+            $updates[] = 'numero = :numero';
             $params[':numero'] = $numero;
         }
 
-
-        if (!is_null($descripcion)) {
-            $updates[] = "descripcion = :descripcion";
+        if (!empty($descripcion)) {
+            $updates[] = 'descripcion = :descripcion';
             $params[':descripcion'] = $descripcion;
         }
 
-        if (!is_null($imagen)) {
-            $updates[] = "imagen = :imagen";
+        if (!empty($imagen)) {
+            $updates[] = 'imagen = :imagen';
             $params[':imagen'] = $imagen;
         }
 
@@ -232,6 +223,21 @@ class Pokemon{
             $query = "UPDATE pokemon SET " . implode(', ', $updates) . " WHERE id = :id";
             $stmt = $db->prepare($query);
             $stmt->execute($params);
+        }
+
+        if (!empty($evoluciones)) {
+            $query = "DELETE FROM evolucion WHERE id_poke = :id";
+            $stmt = $db->prepare($query);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            foreach ($evoluciones as $evolucion) {
+                $query = "INSERT INTO evolucion (id_poke, id_poke2) VALUES (:id_poke, :id_poke2)";
+                $stmt = $db->prepare($query);
+                $stmt->bindValue(':id_poke', $id);
+                $stmt->bindValue(':id_poke2', $evolucion);
+                $stmt->execute();
+            }
         }
 
         if (!empty($tipos)) {
@@ -274,14 +280,14 @@ class Pokemon{
         }
     }
 
-    public function buscarEvoluciones ($numero){
+    public function buscarEvoluciones ($id){
         $pdo = DB::getConexion();
         $stmt = $pdo->prepare("SELECT p2.id, p2.nombre, p2.imagen, p2.descripcion
             FROM evolucion e
             JOIN pokemon p1 ON e.id_poke = p1.id
             JOIN pokemon p2 ON e.id_poke2 = p2.id
             WHERE p1.numero = ?");
-        $stmt->execute([$numero]);
+        $stmt->execute([$id]);
         $evoluciones = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
         return $evoluciones;
 
