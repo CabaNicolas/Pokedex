@@ -2,29 +2,46 @@
 
 require_once __DIR__ . '/src/Pokemon.php';
 session_start();
-
+$idEvoluciones = [];
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     $poke = new Pokemon();
-    $pokemon = $poke->getPokemonById($id);
+    $pokemon = $poke->buscarPokemonPorId($id);
+    $pokemons = $poke->getPokemons();
 
     if (!$pokemon) {
         echo "No se encontró el Pokémon.";
         exit();
     }
+    $tipos = $pokemon->tipos();
+    $tiposDelPokemon = $pokemon->getTipo();
+    $evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
 
-    $tipos = $pokemon->getTipo();
+    if(!$evoluciones && count($evoluciones) > 0){
+        foreach ($evoluciones as $evolucion){
+            $evoluciones[] = $evolucion->getId();
+        }
+    }
 
+    if (!$evoluciones) {
+        $evoluciones = [];
+    }
 
-    if (!is_array($tipos)) {
-        $tipos = explode(',', $tipos);
+    if (!is_array($tiposDelPokemon)) {
+        $tiposDelPokemon = explode(',', $tiposDelPokemon);
     }
 
 
-    if (!$tipos) {
-        $tipos = [];
+    if (!$tiposDelPokemon) {
+        $tiposDelPokemon = [];
     }
+
+    $idEvoluciones = array_map(function($evolucion) {
+        return $evolucion->getId();
+    }, $evoluciones);
+
+
 } else {
     echo "ID del Pokémon no proporcionado.";
     exit();
@@ -62,11 +79,16 @@ if (isset($_GET['id'])) {
 
             <label for="tipo">Selecciona el/los tipo/s:</label>
             <select name="tipos[]" id="tipo" multiple>
-                <option value="Fuego" <?= in_array('Fuego', $tipos) ? 'selected' : '' ?>>Fuego</option>
-                <option value="Agua" <?= in_array('Agua', $tipos) ? 'selected' : '' ?>>Agua</option>
-                <option value="Hierba" <?= in_array('Hierba', $tipos) ? 'selected' : '' ?>>Hierba</option>
+                <?php foreach ($tipos as $tipo): ?>
+                <option value="<?= $tipo['nombre'] ?>" <?= in_array($tipo['nombre'], $tiposDelPokemon) ? 'selected' : '' ?>><?= $tipo['nombre'] ?></option>
+                <?php endforeach; ?>
             </select>
-
+            <label for="evoluciones">Evoluciones:</label>
+            <select name="evoluciones[]" id="evoluciones" multiple>
+                <?php foreach ($pokemons as $pokemon):?>
+                    <option value="<?= $pokemon->getId() ?>" <?= in_array($pokemon->getId(), $idEvoluciones) ? 'selected' : '' ?>><?= $pokemon->getNombre() ?></option>
+                <?php endforeach; ?>
+            </select>
 
             <label for="descripcion">Descripcion:</label>
             <textarea name="descripcion" placeholder="Descripcion" rows="4"><?= $pokemon->getDescripcion() ?></textarea>
