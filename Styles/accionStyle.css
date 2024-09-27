@@ -97,3 +97,43 @@ a.volver {
 a.volver:hover {
     text-decoration: underline;
 }
+
+
+@media (max-width: 480px) {
+    .logo img {
+        height: 40px;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h2{
+        font-size: 1.2rem;
+    }
+
+    .contenedor {
+        padding: 15px;
+    }
+
+    form label {
+        font-size: 0.8rem;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        max-width: 80%;
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+
+    form button {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
+
+    a.volver {
+        font-size: 0.8rem;
+    }
+}

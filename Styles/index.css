@@ -381,3 +381,425 @@ footer {
     margin-top: 50px;
 }
 
+@media (max-width: 1130px) {
+    h1{
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    h3{
+        margin-left: 0;
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 800px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin: 0;
+        margin-right: 20px;
+        display: inline-block;
+    }
+
+    .login-form {
+        align-items: flex-start;
+        margin-right: 0;
+    }
+
+    .login-form input {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .nuevo-pokemon, .logout {
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        margin-right: 10px;
+    }
+
+    .buscador input[type="text"] {
+        width: 45%;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .buscador button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .pokemon-table img {
+        width: 100px;
+        height: auto;
+    }
+
+    .pokemon-table td img {
+        width: 50px;
+        height: 50px;
+        margin: 0 5px;
+        }
+
+    .modif, .baja {
+        font-size: 0.8rem;
+        padding: 3px 5px;
+        width: auto;
+        margin: 1px;
+    }
+
+    .pokemon-table td a {
+        font-size: 0.9rem;
+    }
+
+    .pokemon-table td:nth-child(3) {
+        font-size: 0.9rem;
+    }
+
+    .login-form {
+        align-items: flex-start;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+    .mensaje{
+        font-size: 0.8rem;
+    }
+}
+
+
+@media (max-width: 500px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+   .logo img{
+       width: 35px;
+       height: 35px;
+   }
+
+    h1 {
+        font-size: 1.2rem;
+        margin: 0;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    h3 {
+        font-size: 0.7rem;
+        margin-right: 10px;
+    }
+
+
+    .login-form {
+        align-items: flex-start;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+
+    .login-form input {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 6px;
+        font-size: 0.5rem;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 6px;
+        font-size: 0.6rem;
+    }
+
+    .crear-cuenta{
+        font-size: 0.6rem;
+    }
+
+
+    .nuevo-pokemon button, .logout button {
+        font-size: 0.7rem;
+        padding: 2px 5px;
+    }
+
+    .buscador input[type="text"] {
+        width: 45%;
+        padding: 8px;
+        font-size: 0.6rem;
+    }
+
+    .buscador button {
+        padding: 8px 5px;
+        font-size: 0.7rem;
+    }
+
+    .pokemon-table img {
+        width: 100px;
+        height: auto;
+    }
+
+    .pokemon-table td img {
+        width: 35px;
+        height: 35px;
+        margin: 0 3px;
+    }
+
+    .modif, .baja {
+        font-size: 0.6rem;
+        padding: 2px 3px;
+        width: auto;
+        margin: 1px;
+    }
+
+    .pokemon-table th, .pokemon-table td {
+        font-size: 0.7rem;
+        padding: 10px;
+    }
+
+    .pokemon-table th {
+        padding: 10px;
+    }
+
+    .pokemon-table td a {
+        font-size: 0.6rem;
+    }
+
+    .pokemon-table td:nth-child(3) {
+        font-size: 0.6rem;
+    }
+
+    .mensaje{
+        font-size: 0.6rem;
+    }
+
+    /*detalles del poke*/
+
+    .text-center mb-4 h1{
+        font-size: 1.4rem;
+    }
+
+    .btn-back {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+    }
+
+    .pokemon-info h2{
+        font-size: 1.7rem;
+    }
+
+    .pokemon-info p.description {
+        font-size: 1rem;
+    }
+
+    .pokemon-info img.main-image {
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+    }
+    .tipos-badge {
+        padding: 6px 8px;
+    }
+
+    .tipos-badge img {
+        width: 25px;
+        height: 25px;
+        margin-right: 0px;
+    }
+
+    .evoluciones-titulo {
+        font-size: 1.4rem;
+    }
+
+    .evolution-list {
+        gap: 15px;
+    }
+
+    .evolution-item img.evolution-image {
+        width: 60%;
+        max-width: 150px;
+        height: auto;
+    }
+
+    .pokemon-not-found {
+        font-size: 1rem;
+    }
+
+}
+
+
+@media (max-width: 400px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo img{
+        width: 28px;
+        height: 28px;
+    }
+
+    h1 {
+        font-size: 0.8rem;
+        margin: 0;
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    h3 {
+        font-size: 0.6rem;
+    }
+
+    .login-form {
+        align-items: flex-start;
+        margin-top: 10px;
+    }
+
+    .login-form input {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 6px;
+        font-size: 0.4rem;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 6px;
+        font-size: 0.5rem;
+    }
+
+    .crear-cuenta{
+        font-size: 0.5rem;
+    }
+
+
+    .nuevo-pokemon button, .logout button {
+        font-size: 0.6rem;
+        padding: 2px 3px;
+    }
+
+    .buscador input[type="text"] {
+        width: 35%;
+        padding: 8px;
+        font-size: 0.6rem;
+    }
+
+    .buscador button {
+        padding: 8px 3px;
+        font-size: 0.6rem;
+    }
+
+    .pokemon-table img {
+        width: 100px;
+        height: auto;
+    }
+
+    .pokemon-table td img {
+        width: 30px;
+        height: 30px;
+        margin: 0 2px;
+    }
+
+    .modif, .baja {
+        font-size: 0.5rem;
+        padding: 2px 2px;
+        width: auto;
+        margin: 1px;
+    }
+
+    .pokemon-table th, .pokemon-table td {
+        font-size: 0.6rem;
+        padding: 8px;
+    }
+
+    .pokemon-table th {
+        padding: 8px;
+    }
+
+    .pokemon-table td a {
+        font-size: 0.6rem;
+    }
+
+    .pokemon-table td:nth-child(3) {
+        font-size: 0.6rem;
+    }
+
+    .mensaje{
+        font-size: 0.5rem;
+    }
+
+    /*detalles del poke*/
+
+    .btn-back {
+        padding: 5px 8px;
+        border-radius: 3px;
+        font-size: 0.7rem;
+    }
+
+    .pokemon-info h2{
+        font-size: 1.4rem;
+    }
+
+    .pokemon-info p.description {
+        font-size: 0.8rem;
+    }
+
+    .pokemon-info img.main-image {
+        width: 100%;
+        max-width: 180px;
+        height: auto;
+    }
+    .tipos-badge {
+        padding: 6px 7px;
+    }
+
+    .tipos-badge img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .evoluciones-titulo {
+        font-size: 1rem;
+    }
+
+    .evolution-list {
+        gap: 10px;
+    }
+
+    .evolution-item img.evolution-image {
+        width: 60%;
+        max-width: 120px;
+        height: auto;
+    }
+
+    .pokemon-not-found {
+        font-size: 0.8rem;
+    }
+
+    .text-danger{
+        font-size: 0.8rem;
+    }
+
+}
