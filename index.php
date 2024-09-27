@@ -23,7 +23,7 @@ session_start();
         <input type="password" name="password" placeholder="Contraseña" class="input-pass" required>
         <button type="submit" style="margin-right: 10px;">Ingresar</button>
     </form>
-        <a href="registro.php">Crear cuenta</a>
+        <a href="registro.php" class="crear-cuenta">Crear cuenta</a>
     <?php else:?>
     <h3>Usuario ADMIN</h3>
 
@@ -39,10 +39,10 @@ session_start();
     <?php endif;
 
     if (isset($_GET['error']) && $_GET['error'] == 1) {
-        echo "<p style='color:red;'> Usuario inexistente</p>";
+        echo "<p style='color:red;' class='mensaje'> Usuario inexistente</p>";
 
     }else if (isset($_GET['error']) && $_GET['error'] == 2) {
-        echo "<p style='color:red;'> Contraseña incorrecta</p>";
+        echo "<p style='color:red;' class='mensaje'> Contraseña incorrecta</p>";
 
     }
     ?>
