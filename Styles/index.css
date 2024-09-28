@@ -253,6 +253,7 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .btn-back {
     background-color: #2a75bb;
     border: none;
@@ -428,6 +429,32 @@ footer {
    color: #dc3545;
 }
 
+.imagen_detalle{
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Dorado inicial */
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    animation: gold-flash 3s infinite ease-in-out;
+    opacity: 1;
+}
+@keyframes gold-flash {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), /* Brillo dorado suave */
+        0 0 40px rgba(255, 223, 0, 0.2); /* Sombra suave dorada */
+        transform: scale(1); /* Tamaño normal */
+        opacity: 1; /* Totalmente visible */
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(255, 223, 0, 0.8), /* Brillo dorado máximo */
+        0 0 80px rgba(255, 223, 0, 0.5); /* Sombra más grande */
+        transform: scale(1.05); /* Ligeramente más grande */
+        opacity: 0.9; /* Brillo más suave */
+    }
+}
+
+.linkEvoluciones{
+    text-decoration: none;
+}
+
+
 
 @media (max-width: 1130px) {
     h1{
@@ -440,6 +467,9 @@ footer {
         text-align: center;
     }
 
+    .detalle-titulo{
+        margin-right: 25%;
+    }
 }
 
 @media (max-width: 800px) {
@@ -548,6 +578,19 @@ footer {
     }
     .evolution-item  {
     margin-right: 15%;
+    }
+
+    .evolution-item img.evolution-image {
+        width: 50%;
+        height: auto;
+        border: 3px solid #ffa500;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+    }
+
+    .detalle-titulo{
+        margin-left: 38%;
     }
 }
 
@@ -700,13 +743,17 @@ footer {
     }
 
     .evolution-item img.evolution-image {
-        width: 60%;
+        width: 30%;
         max-width: 150px;
         height: auto;
     }
 
     .pokemon-not-found {
         font-size: 1rem;
+    }
+
+    .detalle-titulo{
+        margin-left: 35%;
     }
 
 }

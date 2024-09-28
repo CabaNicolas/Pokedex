@@ -26,7 +26,10 @@ if ($pokemon != null) {
 </header>
 
 <main class="main-container">
+
+    <div class="contenedorDetalleTitulo">
     <h1 class="detalle-titulo">Detalle de Pokémon</h1>
+        <div/>
     <div>
         <a href="index.php" class="btn-back">Volver a la Pokédex</a>
     </div>
@@ -62,7 +65,11 @@ if ($pokemon != null) {
                             <?php foreach ($evoluciones as $evolucion): ?>
                                 <div class="evolution-item">
                                     <img src="<?php echo htmlspecialchars(Config::$imagenPath .$evolucion->getImagen(), ENT_QUOTES, 'UTF-8'); ?>" alt="Imagen de <?php echo htmlspecialchars($evolucion->getNombre(), ENT_QUOTES, 'UTF-8'); ?>" class="evolution-image" />
-                                    <p><?php echo htmlspecialchars($evolucion->getNombre(), ENT_QUOTES, 'UTF-8'); ?></p>
+                                    <p>
+                                        <a  class="linkEvoluciones" href="detalle.php?id=<?php echo htmlspecialchars($evolucion->getId(), ENT_QUOTES, 'UTF-8'); ?>">
+                                            <?php echo htmlspecialchars($evolucion->getNombre(), ENT_QUOTES, 'UTF-8'); ?>
+                                        </a>
+                                    </p>
                                 </div>
                             <?php endforeach; ?>
                         </div>
