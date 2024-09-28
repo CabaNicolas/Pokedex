@@ -452,6 +452,12 @@ footer {
 
 .linkEvoluciones{
     text-decoration: none;
+    transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.linkEvoluciones:hover{
+    font-size: 20px;
+    color: #ffcc00;
 }
 
 
