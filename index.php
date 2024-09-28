@@ -107,7 +107,7 @@ session_start();
                     <?php endforeach; ?>
                     </td>
                     <td><?= $pokemon->getNumero() ?></td>
-                    <td><a href="detalle.php?id=<?= $pokemon->getId() ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
+                    <td><a class="linkDetalle" href="detalle.php?id=<?= $pokemon->getId() ?>"> <?= $pokemon->getNombre() ?> <a/> </td>
                     <?php if(isset($_SESSION['usuario'])):?>
                     <td>
                         <form class="modificar-pokemon" action="modificate.php" method="get">

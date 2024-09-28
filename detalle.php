@@ -26,17 +26,20 @@ if ($pokemon != null) {
 </header>
 
 <main class="main-container">
-    <h1 class="text-center mb-4">Detalle de Pokémon</h1>
-    <div class="text-center mb-4">
+    <h1 class="detalle-titulo">Detalle de Pokémon</h1>
+    <div>
         <a href="index.php" class="btn-back">Volver a la Pokédex</a>
     </div>
 
     <section class="pokemon-detail">
         <?php if ($pokemon): ?>
             <div class="pokemon-info">
+
+                <div class="detalle">
                 <h2><?php echo htmlspecialchars($pokemon->getNombre(), ENT_QUOTES, 'UTF-8'); ?></h2>
-                <p class="description"><?php echo htmlspecialchars($pokemon->getDescripcion(), ENT_QUOTES, 'UTF-8'); ?></p>
-                <img src="<?php echo  htmlspecialchars(Config::$imagenPath .$pokemon->getImagen(), ENT_QUOTES, 'UTF-8'); ?>" alt="Imagen de <?php echo htmlspecialchars($pokemon->getNombre(), ENT_QUOTES, 'UTF-8'); ?>" class="main-image" />
+                <p class="description"><?php echo htmlspecialchars($pokemon->getDescripcion(), ENT_QUOTES, 'UTF-8'); ?></p> </div>
+
+                <img class="imagen_detalle" src="<?php echo  htmlspecialchars(Config::$imagenPath .$pokemon->getImagen(), ENT_QUOTES, 'UTF-8'); ?>" alt="Imagen de <?php echo htmlspecialchars($pokemon->getNombre(), ENT_QUOTES, 'UTF-8'); ?>" class="main-image" />
 
                 <div class="tipos">
                     <?php
@@ -44,7 +47,7 @@ if ($pokemon != null) {
                     foreach ($tipos as $tipo):
                         ?>
                         <div class="tipos-badge">
-                            <img src="<?php echo htmlspecialchars(Config::$imagenPath .$tipo, ENT_QUOTES, 'UTF-8'); ?>" alt="Tipo de <?php echo htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8'); ?>">
+                            <img class="tipo-imagen" src="<?php echo htmlspecialchars(Config::$imagenPath .$tipo, ENT_QUOTES, 'UTF-8'); ?>" alt="Tipo de <?php echo htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8'); ?>">
 
                         </div>
                     <?php endforeach; ?>
@@ -65,7 +68,8 @@ if ($pokemon != null) {
                         </div>
                     </div>
                 <?php else: ?>
-                    <p class="text-danger">Este pokémon no tiene evoluciones.</p>
+                <div class="texto-peligro">
+                    <p class="text-danger">Este pokémon no tiene evoluciones.</p></div>
                 <?php endif; ?>
             </div>
         <?php else: ?>

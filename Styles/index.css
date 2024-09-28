@@ -274,19 +274,43 @@ footer {
     text-align: center;
 }
 
-.pokemon-info img.main-image {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
+
+.imagen_detalle{
+    width: 30%;
+    height: 30%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    object-fit: cover;
+    margin-top: 10%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.imagen_detalle:hover{
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-info{
+    display: flex;
+    flex-direction: row;
+}
+
+.detalle{
+    display: flex;
+    flex-direction: column;
+    margin-right: 3%;
+    margin-left: 3%;
 }
 
 .pokemon-info h2 {
     font-size: 2.5rem;
     color: #2a75bb;
     margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.pokemon-info h2:hover {
+    color: #ffcb05; /* Color al pasar el cursor, puedes cambiarlo por el que prefieras */
 }
 
 .pokemon-info p.description {
@@ -298,9 +322,10 @@ footer {
 .tipos {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 10%;
     flex-wrap: wrap;
     margin-bottom: 30px;
+
 }
 
 .tipos-badge {
@@ -322,9 +347,7 @@ footer {
 
 .evoluciones {
     margin-top: 40px;
-
 }
-
 
 .evoluciones-titulo {
     font-size: 1.8rem;
@@ -334,17 +357,12 @@ footer {
     display: inline-block;
     padding-bottom: 10px;
     text-align: center;
+    margin-left: 10%;
 }
-
-.evoluciones h3::after {
-    content: '';
-    position: absolute;
-    width: 60px;
-    height: 4px;
-    background-color: #2a75bb;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+.tipos{
+  padding-top: 10%;
+    margin-left: 3%;
+    margin-top: 3%;
 }
 
 .evolution-list {
@@ -356,11 +374,11 @@ footer {
 
 .evolution-item {
     text-align: center;
+    margin-left: 20%;
 }
 
 .evolution-item img.evolution-image {
-    width: 66.67%;
-    max-width: 200px;
+    width: 70%;
     height: auto;
     border: 3px solid #ffa500;
     background-color: #fff;
@@ -379,7 +397,37 @@ footer {
     font-size: 1.5rem;
     color: #dc3545;
     margin-top: 50px;
+
 }
+
+.text-danger{
+    font-size: 1.5rem;
+
+    color: #fff;
+    text-shadow: 0 0 5px #fff,
+    0 0 10px #2a75bb,
+    0 0 15px #2a75bb,
+    0 0 20px #2a75bb,
+    0 0 25px #2a75bb,
+    0 0 30px #2a75bb,
+    0 0 35px #2a75bb;
+    animation: glow 1.5s infinite alternate;
+}
+
+.texto-peligro{
+    margin-top: 15%;
+    margin-left: 3%;
+    margin-left: 3%;
+}
+
+.linkDetalle{
+    text-decoration: none
+}
+
+.linkDetalle :active{
+   color: #dc3545;
+}
+
 
 @media (max-width: 1130px) {
     h1{
@@ -485,6 +533,21 @@ footer {
     }
     .mensaje{
         font-size: 0.8rem;
+    }
+
+    .pokemon-info{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .imagen_detalle{
+        width: 40%;
+        height: 40%;
+       margin-left: 30%;
+    }
+    .evolution-item  {
+    margin-right: 15%;
     }
 }
 
