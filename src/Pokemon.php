@@ -150,7 +150,7 @@ class Pokemon{
 
     public function tipos(){
         $db = DB::getConexion();
-        $query = "SELECT * FROM tipo";
+        $query = "SELECT * FROM tipo ORDER BY nombre";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $tipos = $stmt->fetchAll();
@@ -291,7 +291,7 @@ class Pokemon{
             FROM evolucion e
             JOIN pokemon p1 ON e.id_poke = p1.id
             JOIN pokemon p2 ON e.id_poke2 = p2.id
-            WHERE p1.numero = ?");
+            WHERE p1.id = ?");
         $stmt->execute([$id]);
         $evoluciones = $stmt->fetchAll(PDO::FETCH_CLASS, 'Pokemon');
         return $evoluciones;

@@ -4,7 +4,7 @@ require_once __DIR__ . '/Config.php';
 $id = $_GET['id'];
 $pokemon = (new Pokemon())->buscarPokemonPorId($id);
 if ($pokemon != null) {
-    $evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
+    $evoluciones = $pokemon->buscarEvoluciones($pokemon->getId());
 }
 ?>
 

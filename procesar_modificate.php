@@ -26,6 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $evolucionesIds = $pokemon->verificarSiExistePokemons($evoluciones);
 
+    if(count($tiposNombres) > 2){
+        $_SESSION['error-tipo-modify'] = "Solo se permiten hasta 2 tipos";
+        header("Location: modificate.php?id=$id");
+        exit();
+    }
+
     if (empty($tiposIds)) {
         echo "Error: No se seleccionaron tipos válidos.";
         exit();

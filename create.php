@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/src/Pokemon.php';
+$tipos = (new Pokemon())->tipos();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +28,10 @@ require_once __DIR__ . '/src/Pokemon.php';
 
     <label for="tipo">Selecciona el/los tipo/s:</label>
     <select name="tipos[]" id="tipo" multiple required>
-        <option value="fuego.webp">Fuego</option>
-        <option value="agua.webp">Agua</option>
-        <option value="planta.webp">Planta</option>
+        <?php foreach ($tipos as $tipo):
+            $nombreTipo = pathinfo($tipo['nombre'], PATHINFO_FILENAME);?>
+            <option value="<?= $tipo['nombre'] ?>" ?><?= $nombreTipo ?></option>
+        <?php endforeach; ?>
     </select>
 
     <label for="evoluciones">Evoluciones:</label>

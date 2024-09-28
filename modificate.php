@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     }
     $tipos = $pokemon->tipos();
     $tiposDelPokemon = $pokemon->getTipo();
-    $evoluciones = $pokemon->buscarEvoluciones($pokemon->getNumero());
+    $evoluciones = $pokemon->buscarEvoluciones($pokemon->getId());
 
     if(!$evoluciones && count($evoluciones) > 0){
         foreach ($evoluciones as $evolucion){
@@ -40,7 +40,6 @@ if (isset($_GET['id'])) {
     $idEvoluciones = array_map(function($evolucion) {
         return $evolucion->getId();
     }, $evoluciones);
-
 
 } else {
     echo "ID del Pokémon no proporcionado.";
@@ -85,10 +84,16 @@ if (isset($_GET['id'])) {
                 <option value="<?= $tipo['nombre'] ?>" <?= in_array($tipo['nombre'], $tiposDelPokemon) ? 'selected' : '' ?>><?= $nombreTipo ?></option>
                 <?php endforeach; ?>
             </select>
+            <?php
+                if(isset($_SESSION['error-tipo-modify'])):
+                    echo '<p style="color:red;margin-top:0">' . $_SESSION['error-tipo-modify'] . '</p>';
+                    unset($_SESSION['error-tipo-modify']);
+                endif;
+            ?>
             <label for="evoluciones">Evoluciones:</label>
             <select name="evoluciones[]" id="evoluciones" multiple>
-                <?php foreach ($pokemons as $pokemon):?>
-                    <option value="<?= $pokemon->getId() ?>" <?= in_array($pokemon->getId(), $idEvoluciones) ? 'selected' : '' ?>><?= $pokemon->getNombre() ?></option>
+                <?php foreach ($pokemons as $poke):?>
+                    <option value="<?= $poke->getId() ?>" <?= in_array($poke->getId(), $idEvoluciones) ? 'selected' : '' ?>><?= $poke->getNombre() ?></option>
                 <?php endforeach; ?>
             </select>
 
