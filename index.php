@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/src/Pokemon.php';
+require_once __DIR__ . '/Config.php';
 session_start();
 ?>
 <!DOCTYPE html>
@@ -96,13 +97,13 @@ session_start();
             <?php foreach ($pokemons as $pokemon):
                 ?>
                 <tr>
-                    <td><img src="<?= $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
+                    <td><img src="<?= Config::$imagenPath . $pokemon->getImagen() ?>" alt="<?= $pokemon->getNombre() ?>"></td>
                     <td>
                     <?php
                     $tipos = explode(',', $pokemon->getTipo());
                     foreach($tipos as $tipo):
                     ?>
-                    <img src="<?= $tipo ?>" alt="<?= $tipo ?>">
+                    <img src="<?= Config::$imagenPath .  $tipo ?>" alt="<?= $tipo ?>">
                     <?php endforeach; ?>
                     </td>
                     <td><?= $pokemon->getNumero() ?></td>

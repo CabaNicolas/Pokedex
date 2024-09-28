@@ -27,9 +27,9 @@ require_once __DIR__ . '/src/Pokemon.php';
 
     <label for="tipo">Selecciona el/los tipo/s:</label>
     <select name="tipos[]" id="tipo" multiple required>
-        <option value="Imagenes/fuego.webp">Fuego</option>
-        <option value="Imagenes/agua.webp">Agua</option>
-        <option value="Imagenes/planta.webp">Planta</option>
+        <option value="fuego.webp">Fuego</option>
+        <option value="agua.webp">Agua</option>
+        <option value="planta.webp">Planta</option>
     </select>
 
     <label for="evoluciones">Evoluciones:</label>

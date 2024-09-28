@@ -12,13 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $imagen = $_FILES['imagen']['name'];
     $pokemon = new Pokemon();
 
+    $respuesta = false;
     $uploadFile = null;
     if (!empty($imagen)){
         $tempPath = $_FILES['imagen']['tmp_name'];
         $uploadDir = 'Imagenes/';
         $uploadFile = $uploadDir . basename($imagen);
-        move_uploaded_file($tempPath, $uploadFile);
+        $respuesta = move_uploaded_file($tempPath, $uploadFile);
     }
+    $uploadFile = $respuesta ? basename($imagen) : null;
 
     $tiposIds = $pokemon->verificarSiExisteTipos($tiposNombres);
 

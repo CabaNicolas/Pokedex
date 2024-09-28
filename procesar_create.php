@@ -21,7 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $uploadDir = 'Imagenes/';
     $uploadFile = $uploadDir . basename($imagen);
     $respuesta = move_uploaded_file($tempPath, $uploadFile);
-    $uploadFile = $respuesta ? $uploadFile : null;
+
+    $uploadFile = $respuesta ? basename($imagen) : null;
+
+
+    $tipos = array_map(function($tipo) {
+        return basename($tipo);
+    }, $tipos);
 
     $validTypes = $pokemon->verificarSiExisteTipos($tipos);
     if($evoluciones != null){

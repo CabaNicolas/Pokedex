@@ -1,5 +1,6 @@
 <?php
 require_once 'DB.php';
+require_once __DIR__ . '/../Config.php';
 class Pokemon{
 
     private $id;
@@ -57,6 +58,7 @@ class Pokemon{
 
     public function getImagen(){
         return $this->imagen;
+
     }
 
     public function getDescripcion(){
@@ -103,8 +105,8 @@ class Pokemon{
         $stmt->execute();
     }
     public function deletePokemon($id) {
-        $this->eliminarDependencias($id);
         $this->deleteImagen($id);
+        $this->eliminarDependencias($id);
         $db = DB::getConexion();
         $query = "DELETE FROM pokemon WHERE id = :id";
         $stmt = $db->prepare($query);
@@ -119,8 +121,11 @@ class Pokemon{
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $imagen = $stmt->fetchColumn();
-        if (file_exists($imagen)) {
-            unlink($imagen);
+
+        $rutaImagenCompleta =  $_SERVER['DOCUMENT_ROOT'] . Config::$imagenPath . $imagen;
+
+        if (file_exists($rutaImagenCompleta)) {
+            unlink($rutaImagenCompleta);
         }
     }
 

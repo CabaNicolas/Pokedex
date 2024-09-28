@@ -56,6 +56,7 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar un Pokémon</title>
     <link rel="stylesheet" href="Styles/accionStyle.css">
+    <link rel="icon" href="Imagenes/iconoPestania.webp">
 </head>
 <body>
 
@@ -79,8 +80,9 @@ if (isset($_GET['id'])) {
 
             <label for="tipo">Selecciona el/los tipo/s:</label>
             <select name="tipos[]" id="tipo" multiple>
-                <?php foreach ($tipos as $tipo): ?>
-                <option value="<?= $tipo['nombre'] ?>" <?= in_array($tipo['nombre'], $tiposDelPokemon) ? 'selected' : '' ?>><?= $tipo['nombre'] ?></option>
+                <?php foreach ($tipos as $tipo):
+                    $nombreTipo = pathinfo($tipo['nombre'], PATHINFO_FILENAME);?>
+                <option value="<?= $tipo['nombre'] ?>" <?= in_array($tipo['nombre'], $tiposDelPokemon) ? 'selected' : '' ?>><?= $nombreTipo ?></option>
                 <?php endforeach; ?>
             </select>
             <label for="evoluciones">Evoluciones:</label>
